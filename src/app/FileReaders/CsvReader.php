@@ -3,18 +3,20 @@
 namespace App\FileReaders;
 
 use App\Contracts\FileReaderInterface;
+use League\Csv\Exception;
 use League\Csv\Reader;
 
 class CsvReader implements FileReaderInterface
 {
     /**
-     * @param string $path
+     * @param object $fileInput
      * @return mixed
-     * @throws \League\Csv\Exception
+     * @throws Exception
      */
-    public function fetchAll(string $path): mixed
+    public function fetchAll(object $fileInput): mixed
     {
-        $reader = Reader::createFromPath($path, 'r');
+        $fileStream = new \SplFileObject($fileInput);
+        $reader = Reader::createFromFileObject($fileStream);
 
         $reader->setHeaderOffset(0);
 
@@ -22,13 +24,15 @@ class CsvReader implements FileReaderInterface
     }
 
     /**
-     * @param string $path
+     * @param object $fileInput
      * @return mixed
-     * @throws \League\Csv\Exception
+     * @throws Exception
      */
-    public function getHeaders(string $path): mixed
+    public function getHeaders(object $fileInput): mixed
     {
-        $reader = Reader::createFromPath($path, 'r');
+        $fileStream = new \SplFileObject($fileInput);
+        $reader = Reader::createFromFileObject($fileStream);
+
         $reader->setHeaderOffset(0);
 
         return $reader->getHeader();

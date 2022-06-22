@@ -4,5 +4,5 @@ namespace App\Contracts;
 
 interface FileReaderInterface
 {
-    // todo: if no use then we dont need it
+    // @todo: if no use then we don't need it
 }

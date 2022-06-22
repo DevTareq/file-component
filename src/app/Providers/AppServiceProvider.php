@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // @todo: Refactor
+        // @todo: Refactor to be inside Rule class
         Validator::extend('check_decimal', function ($attribute, $value, $params, $validator) {
 
             $validator->setCustomMessages(['check_decimal' => 'The :attribute must be (length of '. $params[0] .

@@ -16,8 +16,8 @@ interface FileValidatorInterface
     public function getRules(): array;
 
     /**
-     * @param string $filePath
+     * @param object $fileInput
      * @return mixed
      */
-    public function validate(string $filePath): mixed;
+    public function validate(object $fileInput): mixed;
 }

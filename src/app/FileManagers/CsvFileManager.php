@@ -17,8 +17,6 @@ class CsvFileManager implements FileManagerInterface
 
     private const FILE_EXTENSION = 'csv';
 
-    private ?string $filePath = null;
-
     /**
      * @param DataTransferObjectInterface $dataTransferObject
      * @return mixed
@@ -26,9 +24,7 @@ class CsvFileManager implements FileManagerInterface
      */
     public function process(DataTransferObjectInterface $dataTransferObject): mixed
     {
-        return $this->upload($dataTransferObject)
-                    ->validate($dataTransferObject, App::make(CsvFileValidator::class));
-
+        return $this->validate($dataTransferObject, App::make(CsvFileValidator::class));
     }
 
     /**
@@ -41,7 +37,7 @@ class CsvFileManager implements FileManagerInterface
     {
         throw_if(null == $dataTransferObject->getFileInput(),  new FileNotFoundException());
 
-        return $fileValidator->validate($this->filePath);
+        return $fileValidator->validate($dataTransferObject->getFileInput());
     }
 
     /**
@@ -57,6 +53,7 @@ class CsvFileManager implements FileManagerInterface
      * @param DataTransferObjectInterface $dataTransferObject
      * @return $this
      * @throws \Throwable
+     * @deprecated To be added in later stage.
      */
     public function upload(DataTransferObjectInterface $dataTransferObject): self
     {

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Contracts\DataTransferObjectInterface;
 use App\Contracts\FileManagerFactoryInterface;
-use App\DataTransferObjects\FileDTO;
 use App\Factories\FileManagerFactory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -37,9 +36,11 @@ class FileController extends BaseController
      */
     public function upload(Request $request)
     {
-        //@todo: DTO
-        $fileManager = FileManagerFactory::getFileManager($request);
-        $results = $fileManager->process($request);
+        $fileDTO = $this->dataTransferObject->createFromRequest($request);
+
+        $fileManager = FileManagerFactory::getFileManager($fileDTO);
+
+        $results = $fileManager->process($fileDTO);
 
         return view('upload', compact('results'));
     }

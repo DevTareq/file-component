@@ -5,6 +5,7 @@ namespace App\Validators\Files;
 use App\Contracts\FileReaderInterface;
 use App\Contracts\FileValidatorInterface;
 use Illuminate\Support\Facades\Validator;
+use League\Csv\Exception;
 
 class CsvFileValidator implements FileValidatorInterface
 {
@@ -111,13 +112,13 @@ class CsvFileValidator implements FileValidatorInterface
     }
 
     /**
-     * @param string $filePath
-     * @return mixed
-     * @throws \League\Csv\Exception
+     * @param object $fileInput
+     * @return array|null
+     * @throws Exception
      */
-    public function validate(string $filePath): mixed
+    public function validate(object $fileInput): ?array
     {
-        $fileRecords = $this->fileParser->fetchAll($filePath);
+        $fileRecords = $this->fileParser->fetchAll($fileInput);
 
         return $this->validateMultiple($fileRecords);
     }
