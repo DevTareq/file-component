@@ -2,7 +2,7 @@
 
 namespace App\Exceptions\Files;
 
-class FileNotFoundException
+class FileNotFoundException extends \Exception
 {
     public const MESSAGE = 'Unable to find file';
 }

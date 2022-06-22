@@ -7,7 +7,6 @@ use App\Contracts\FileManagerInterface;
 use App\Contracts\FileValidatorInterface;
 use App\Exceptions\Files\FileNotFoundException;
 use App\Exceptions\Files\FileUploadException;
-use App\Exceptions\Files\UnsupportedFileException;
 use App\Validators\Files\CsvFileValidator;
 use Illuminate\Support\Facades\App;
 
@@ -15,7 +14,7 @@ class CsvFileManager implements FileManagerInterface
 {
     private const FOLDER_PATH = './uploads/csv';
 
-    private const FILE_EXTENSION = 'csv';
+    public const FILE_EXTENSION = 'csv';
 
     /**
      * @param DataTransferObjectInterface $dataTransferObject
@@ -37,12 +36,15 @@ class CsvFileManager implements FileManagerInterface
     {
         throw_if(null == $dataTransferObject->getFileInput(),  new FileNotFoundException());
 
-        return $fileValidator->validate($dataTransferObject->getFileInput());
+        $fileValidator->isValidFile($dataTransferObject);
+
+        return $fileValidator->validate($dataTransferObject);
     }
 
     /**
      * @param string $fileName
      * @return string
+     * @deprecated belongs to upload()
      */
     private function getFullPath(string $fileName): string
     {
@@ -57,15 +59,9 @@ class CsvFileManager implements FileManagerInterface
      */
     public function upload(DataTransferObjectInterface $dataTransferObject): self
     {
-        throw_if(null == $dataTransferObject->getFileInput(), new FileNotFoundException());
-
-        $fileExt = $dataTransferObject->getExtension();
-
-        throw_if($fileExt !== static::FILE_EXTENSION, new UnsupportedFileException());
-
         $destinationPath = static::FOLDER_PATH . DIRECTORY_SEPARATOR;
 
-        $fileName = 'U-' . time() . '.' . $fileExt;
+        $fileName = 'U-' . time() . '.' . $dataTransferObject->getExtension();
 
         throw_if(!$dataTransferObject->getFileInput()->move($destinationPath, $fileName),
             new FileUploadException());

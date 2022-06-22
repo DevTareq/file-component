@@ -2,8 +2,12 @@
 
 namespace App\Validators\Files;
 
+use App\Contracts\DataTransferObjectInterface;
 use App\Contracts\FileReaderInterface;
 use App\Contracts\FileValidatorInterface;
+use App\Exceptions\Files\FileNotFoundException;
+use App\Exceptions\Files\UnsupportedFileException;
+use App\FileManagers\CsvFileManager;
 use Illuminate\Support\Facades\Validator;
 use League\Csv\Exception;
 
@@ -112,13 +116,13 @@ class CsvFileValidator implements FileValidatorInterface
     }
 
     /**
-     * @param object $fileInput
+     * @param DataTransferObjectInterface $dataTransferObject
      * @return array|null
      * @throws Exception
      */
-    public function validate(object $fileInput): ?array
+    public function validate(DataTransferObjectInterface $dataTransferObject): ?array
     {
-        $fileRecords = $this->fileParser->fetchAll($fileInput);
+        $fileRecords = $this->fileParser->fetchAll($dataTransferObject->getFileInput());
 
         return $this->validateMultiple($fileRecords);
     }
@@ -165,5 +169,19 @@ class CsvFileValidator implements FileValidatorInterface
         }
 
         return [];
+    }
+
+    /**
+     * @param DataTransferObjectInterface $dataTransferObject
+     * @return mixed
+     * @throws \Throwable
+     */
+    public function isValidFile(DataTransferObjectInterface $dataTransferObject): mixed
+    {
+        throw_if(null == $dataTransferObject->getFileInput(), new FileNotFoundException());
+
+        throw_if($dataTransferObject->getExtension() !== CsvFileManager::FILE_EXTENSION, new UnsupportedFileException());
+
+        return true;
     }
 }

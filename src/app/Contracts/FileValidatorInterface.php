@@ -16,8 +16,8 @@ interface FileValidatorInterface
     public function getRules(): array;
 
     /**
-     * @param object $fileInput
+     * @param DataTransferObjectInterface $dataTransferObject
      * @return mixed
      */
-    public function validate(object $fileInput): mixed;
+    public function validate(DataTransferObjectInterface $dataTransferObject): mixed;
 }

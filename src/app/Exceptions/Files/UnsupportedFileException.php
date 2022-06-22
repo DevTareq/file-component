@@ -2,7 +2,7 @@
 
 namespace App\Exceptions\Files;
 
-class UnsupportedFileException
+class UnsupportedFileException extends \Exception
 {
     public const MESSAGE = 'File format is not supported';
 }

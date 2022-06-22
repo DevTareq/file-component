@@ -114,7 +114,6 @@ class Handler extends ExceptionHandler
         # We get the class name for the exception that was raised
         $exceptionClass = get_class($exception);
 
-        dd($exception->getMessage());
         # we see if we have registered it in the mapping - if it isn't
         # we create an initial structure as an 'Internal Server Error'
         # note that this can always be revised at a later time
