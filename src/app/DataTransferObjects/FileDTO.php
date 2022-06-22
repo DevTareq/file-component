@@ -38,10 +38,13 @@ class FileDTO implements DataTransferObjectInterface
 
     /**
      * @param string $path
+     * @return $this
      */
-    public function setPath(string $path): void
+    public function setPath(string $path): self
     {
         $this->path = $path;
+
+        return $this;
     }
 
     /**
@@ -54,10 +57,13 @@ class FileDTO implements DataTransferObjectInterface
 
     /**
      * @param string $extension
+     * @return $this
      */
-    public function setExtension(string $extension): void
+    public function setExtension(string $extension): self
     {
         $this->extension = $extension;
+
+        return $this;
     }
 
     /**
@@ -70,9 +76,12 @@ class FileDTO implements DataTransferObjectInterface
 
     /**
      * @param object $fileInput
+     * @return $this
      */
-    public function setFileInput(object $fileInput): void
+    public function setFileInput(object $fileInput): self
     {
         $this->fileInput = $fileInput;
+
+        return $this;
     }
 }

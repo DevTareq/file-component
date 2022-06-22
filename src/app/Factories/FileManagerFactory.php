@@ -9,7 +9,7 @@ use App\Exceptions\Files\UnsupportedFileException;
 
 class FileManagerFactory implements FileManagerFactoryInterface
 {
-    private const FILEMANAGER_CLASS_POSTFIX = 'FileManager';
+    private const FILE_MANAGER_CLASS_POSTFIX = 'FileManager';
 
     /**
      * @param DataTransferObjectInterface $dataTransferObject
@@ -23,12 +23,20 @@ class FileManagerFactory implements FileManagerFactoryInterface
 
         $extension = $dataTransferObject->getFileInput()->getClientOriginalExtension();
 
-        $factoryClassName = ucfirst($extension) . static::FILEMANAGER_CLASS_POSTFIX;
+        $factoryClassName = ucfirst($extension) . static::FILE_MANAGER_CLASS_POSTFIX;
         $factoryClassNamespace = '\App\FileManagers\\' . $factoryClassName;
 
         // return the type of file not supported exception
         throw_if(!class_exists($factoryClassNamespace), new UnsupportedFileException());
 
         return new $factoryClassNamespace;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getPostFixName(): string
+    {
+        return static::FILE_MANAGER_CLASS_POSTFIX;
     }
 }
