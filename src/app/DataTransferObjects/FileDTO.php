@@ -16,6 +16,9 @@ class FileDTO implements DataTransferObjectInterface
     /** @var ?object $fileInput */
     protected ?object $fileInput = null;
 
+    /** @var ?string $fileCategory */
+    protected ?string $fileCategory;
+
     /**
      * @param Request $request
      * @return $this
@@ -23,6 +26,7 @@ class FileDTO implements DataTransferObjectInterface
     public function createFromRequest(Request $request): self
     {
         $this->fileInput = $request->file('file');
+        $this->fileCategory = $request->get('category');
         $this->extension = $request->file('file')->getClientOriginalExtension();
 
         return $this;
@@ -81,6 +85,25 @@ class FileDTO implements DataTransferObjectInterface
     public function setFileInput(object $fileInput): self
     {
         $this->fileInput = $fileInput;
+
+        return $this;
+    }
+
+    /**
+     * @return ?string
+     */
+    public function getFileCategory(): ?string
+    {
+        return $this->fileCategory;
+    }
+
+    /**
+     * @param ?string $fileCategory
+     * @return $this
+     */
+    public function setFileCategory(?string $fileCategory): self
+    {
+        $this->fileCategory = $fileCategory;
 
         return $this;
     }

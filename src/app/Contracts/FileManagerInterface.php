@@ -2,8 +2,6 @@
 
 namespace App\Contracts;
 
-use Illuminate\Http\Request;
-
 interface FileManagerInterface
 {
     /**
@@ -14,7 +12,12 @@ interface FileManagerInterface
 
     /**
      * @param DataTransferObjectInterface $dataTransferObject
-     * @return FileManagerInterface
+     * @return FileValidatorInterface
      */
-    public function upload(DataTransferObjectInterface $dataTransferObject): FileManagerInterface;
+    public function getFileValidator(DataTransferObjectInterface $dataTransferObject): FileValidatorInterface;
+
+    /**
+     * @return FileReaderInterface
+     */
+    public function getFileReader(): FileReaderInterface;
 }

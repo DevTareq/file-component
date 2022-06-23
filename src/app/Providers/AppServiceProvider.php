@@ -2,15 +2,16 @@
 
 namespace App\Providers;
 
+use App\Contracts\Abstracts\AbstractFileValidator;
 use App\Contracts\DataTransferObjectInterface;
 use App\Contracts\FileManagerFactoryInterface;
 use App\Contracts\FileReaderInterface;
 use App\DataTransferObjects\FileDTO;
 use App\Factories\FileManagerFactory;
-use App\Http\Controllers\FileController;
 use App\FileReaders\CsvReader;
+use App\Http\Controllers\FileController;
+use App\Rules\DecimalRule;
 use App\Validators\Files\CsvFileValidator;
-use App\Validators\Rules\DecimalRule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,9 +32,9 @@ class AppServiceProvider extends ServiceProvider
             ->needs(DataTransferObjectInterface::class)
             ->give(FileDTO::class);
 
-        $this->app->when(CsvFileValidator::class)
-            ->needs(FileReaderInterface::class)
-            ->give(CsvReader::class);
+//        $this->app->when(AbstractFileValidator::class)
+//            ->needs(FileReaderInterface::class)
+//            ->give(CsvReader::class);
     }
 
     /**

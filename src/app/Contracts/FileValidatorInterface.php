@@ -14,10 +14,4 @@ interface FileValidatorInterface
      * @return array
      */
     public function getRules(): array;
-
-    /**
-     * @param DataTransferObjectInterface $dataTransferObject
-     * @return mixed
-     */
-    public function validate(DataTransferObjectInterface $dataTransferObject): mixed;
 }

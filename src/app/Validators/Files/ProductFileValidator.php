@@ -2,28 +2,13 @@
 
 namespace App\Validators\Files;
 
+use App\Contracts\Abstracts\AbstractFileValidator;
 use App\Contracts\DataTransferObjectInterface;
 use App\Contracts\FileReaderInterface;
-use App\Contracts\FileValidatorInterface;
-use App\Exceptions\Files\FileNotFoundException;
-use App\Exceptions\Files\UnsupportedFileException;
-use App\FileManagers\CsvFileManager;
-use Illuminate\Support\Facades\Validator;
-use League\Csv\Exception;
 
-class CsvFileValidator implements FileValidatorInterface
+class ProductFileValidator extends AbstractFileValidator
 {
-    /** @var array $errors */
-    protected array $errors = [];
-
-    /**
-     * @param FileReaderInterface $fileParser
-     */
-    public function __construct(
-        protected FileReaderInterface $fileParser
-    ) {}
-
-    private array $rules = [
+    protected array $rules = [
         'product_name' => 'string|required|max:255',
         'product_handle' => 'string|nullable|max:255',
         'product_desc' => 'string',
@@ -99,89 +84,17 @@ class CsvFileValidator implements FileValidatorInterface
     ];
 
     /**
-     * @param array $array
-     * @return void
-     */
-    public function setRules(array $array): void
-    {
-        $this->rules = $array;
-    }
-
-    /**
-     * @return array
-     */
-    public function getRules(): array
-    {
-        return $this->rules;
-    }
-
-    /**
      * @param DataTransferObjectInterface $dataTransferObject
+     * @param FileReaderInterface $fileReader
      * @return array|null
-     * @throws Exception
-     */
-    public function validate(DataTransferObjectInterface $dataTransferObject): ?array
-    {
-        $fileRecords = $this->fileParser->fetchAll($dataTransferObject->getFileInput());
-
-        return $this->validateMultiple($fileRecords);
-    }
-
-    /**
-     * @param $fileRecords
-     * @return array|null
-     */
-    private function validateMultiple($fileRecords): ?array
-    {
-        foreach ($fileRecords as $offset => $record) {
-            $validator = Validator::make($record, $this->getRules());
-
-            if (!$validator->fails()) {
-                continue;
-            }
-
-            $this->errors[] = [
-                'record' => $offset,
-                'errors' => $validator->errors()->all(),
-            ];
-        }
-
-        return $this->errors ?? [];
-    }
-
-    /**
-     * @param $fileRecords
-     * @return array|null
-     */
-    private function validateOnce($fileRecords): ?array
-    {
-        foreach ($fileRecords as $offset => $record) {
-            $validator = Validator::make($record, $this->getRules());
-
-            if ($validator->fails()) {
-                $this->errors[] = [
-                    'record' => $offset,
-                    'errors' => $validator->errors()->all(),
-                ];
-
-                return $this->errors;
-            }
-        }
-
-        return [];
-    }
-
-    /**
-     * @param DataTransferObjectInterface $dataTransferObject
-     * @return mixed
      * @throws \Throwable
      */
-    public function isValidFile(DataTransferObjectInterface $dataTransferObject): mixed
+    public function validate(DataTransferObjectInterface $dataTransferObject, FileReaderInterface $fileReader): ?array
     {
-        throw_if(null == $dataTransferObject->getFileInput(), new FileNotFoundException());
+        $this->isValidFile($dataTransferObject);
 
-        throw_if($dataTransferObject->getExtension() !== CsvFileManager::FILE_EXTENSION, new UnsupportedFileException());
+        $fileRecords = $fileReader->fetchAll($dataTransferObject->getFileInput());
 
-        return true;
+        return $this->validateMultiple($fileRecords);
     }
 }
