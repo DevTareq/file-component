@@ -5,6 +5,7 @@ namespace App\Factories;
 use App\Contracts\DataTransferObjectInterface;
 use App\Contracts\FileManagerFactoryInterface;
 use App\Exceptions\Files\FileNotFoundException;
+use App\Exceptions\Files\UnsupportedFileCategory;
 use App\Exceptions\Files\UnsupportedFileException;
 
 class FileManagerFactory implements FileManagerFactoryInterface
@@ -18,7 +19,8 @@ class FileManagerFactory implements FileManagerFactoryInterface
      */
     public static function getFileManager(DataTransferObjectInterface $dataTransferObject): mixed
     {
-        // Get the file extension
+        throw_if(null == $dataTransferObject->getFileCategory(), new UnsupportedFileCategory());
+
         throw_if(!$dataTransferObject->getFileInput(), new FileNotFoundException());
 
         $extension = $dataTransferObject->getFileInput()->getClientOriginalExtension();

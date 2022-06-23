@@ -6,7 +6,7 @@ use App\Contracts\DataTransferObjectInterface;
 use App\Contracts\FileManagerInterface;
 use App\Contracts\FileReaderInterface;
 use App\Contracts\FileValidatorInterface;
-use App\Factories\ValidatorFactory;
+use App\Factories\FileValidatorFactory;
 use App\FileReaders\CsvReader;
 
 class CsvFileManager implements FileManagerInterface
@@ -41,6 +41,6 @@ class CsvFileManager implements FileManagerInterface
      */
     public function getFileValidator(DataTransferObjectInterface $dataTransferObject): FileValidatorInterface
     {
-        return $this->fileValidator = ValidatorFactory::make($dataTransferObject);
+        return $this->fileValidator = FileValidatorFactory::make($dataTransferObject);
     }
 }
