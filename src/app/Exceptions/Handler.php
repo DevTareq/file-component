@@ -59,7 +59,7 @@ class Handler extends ExceptionHandler
         ],
 
         UnsupportedFileException::class => [
-            'code' => 409,
+            'code' => 400,
             'message' => UnsupportedFileException::MESSAGE,
             'adaptMessage' => false,
         ],

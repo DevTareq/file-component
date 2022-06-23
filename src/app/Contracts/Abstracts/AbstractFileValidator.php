@@ -47,6 +47,7 @@ abstract class AbstractFileValidator implements FileValidatorInterface
     protected function validateMultiple($fileRecords): ?array
     {
         foreach ($fileRecords as $offset => $record) {
+
             $validator = Validator::make($record, $this->getRules());
 
             if (!$validator->fails()) {

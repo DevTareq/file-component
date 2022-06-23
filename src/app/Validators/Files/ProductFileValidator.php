@@ -79,8 +79,6 @@ class ProductFileValidator extends AbstractFileValidator
         'custom_field_2' => 'string',
         'custom_field_3' => 'string',
         'custom_field_4' => 'string',
-        'created_at' => 'integer|min:1',
-        'updated_at' => 'integer|min:1',
     ];
 
     /**
