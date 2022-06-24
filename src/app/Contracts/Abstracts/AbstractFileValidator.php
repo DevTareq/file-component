@@ -93,7 +93,6 @@ abstract class AbstractFileValidator implements FileValidatorInterface
      */
     protected function validateLogicalRules(DataTransferObjectInterface $dataTransferObject): mixed
     {
-        // @todo: handle the exception
         throw_if(empty($this->getLogicalValidators()), new EmptyLogicalValidationException());
 
         foreach ($this->getLogicalValidators() as $logicalValidator) {

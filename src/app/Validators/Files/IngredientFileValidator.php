@@ -10,7 +10,7 @@ class IngredientFileValidator extends AbstractFileValidator
 {
     protected array $rules = [
         'ingredient_name' => 'string|required|max:255',
-        'is_preparation_item' => 'string|required|max:255',
+        'is_preparation_item' => 'string|nullable|max:255',
         'ingredient_unit' => 'numeric|required|check_decimal:8,3',
         'supplier_pack_size' => 'string|nullable|max:255',
         'purchase_price' => 'numeric|nullable|check_decimal:8,3',
