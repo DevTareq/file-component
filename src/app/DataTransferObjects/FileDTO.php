@@ -3,6 +3,8 @@
 namespace App\DataTransferObjects;
 
 use App\Contracts\DataTransferObjectInterface;
+use App\Exceptions\Files\FileNotFoundException;
+use App\Exceptions\Files\MissingFileCategory;
 use Illuminate\Http\Request;
 
 class FileDTO implements DataTransferObjectInterface
@@ -25,6 +27,9 @@ class FileDTO implements DataTransferObjectInterface
      */
     public function createFromRequest(Request $request): self
     {
+        throw_if(!$request->file('file'), new FileNotFoundException());
+        throw_if(!$request->get('category'), new MissingFileCategory());
+
         $this->fileInput = $request->file('file');
         $this->fileCategory = $request->get('category');
         $this->extension = $request->file('file')->getClientOriginalExtension();

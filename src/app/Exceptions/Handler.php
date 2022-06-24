@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use App\Exceptions\Files\FileNotFoundException;
 use App\Exceptions\Files\FileUploadException;
+use App\Exceptions\Files\MissingFileCategory;
 use App\Exceptions\Files\UnsupportedFileException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -67,7 +68,13 @@ class Handler extends ExceptionHandler
         AuthorizationException::class => [
             'code' => 401,
             'message' => 'Unauthorized access',
-            'adaptMessage' => true,
+            'adaptMessage' => false,
+        ],
+
+        MissingFileCategory::class => [
+            'code' => 400,
+            'message' => 'Missing data: category',
+            'adaptMessage' => false,
         ],
     ];
 
