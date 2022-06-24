@@ -5,9 +5,14 @@ namespace App\Validators\Files;
 use App\Contracts\Abstracts\AbstractFileValidator;
 use App\Contracts\DataTransferObjectInterface;
 use App\Contracts\FileReaderInterface;
+use App\Validators\Logics\StaffOutletPasscodeValidator;
 
 class StaffFileValidator extends AbstractFileValidator
 {
+    protected ?array $logicalValidators = [
+        StaffOutletPasscodeValidator::class,
+    ];
+
     protected array $rules = [
         'staff_name' => 'string|required|max:255',
         'display_name' => 'string|nullable|max:255',
@@ -32,10 +37,16 @@ class StaffFileValidator extends AbstractFileValidator
      */
     public function validate(DataTransferObjectInterface $dataTransferObject, FileReaderInterface $fileReader): ?array
     {
-        $this->isValidFile($dataTransferObject);
-
         $fileRecords = $fileReader->fetchAll($dataTransferObject->getFileInput());
 
-        return $this->validateMultiple($fileRecords);
+        $results = $this->validateMultiple($fileRecords);
+
+        if (!$this->hasErrors($results)) {
+            $dataTransferObject->setValidatedRecords($results);
+
+            $this->validateLogicalRules($dataTransferObject);
+        }
+
+        return $results;
     }
 }

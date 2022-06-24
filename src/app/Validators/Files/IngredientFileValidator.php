@@ -42,8 +42,6 @@ class IngredientFileValidator extends AbstractFileValidator
      */
     public function validate(DataTransferObjectInterface $dataTransferObject, FileReaderInterface $fileReader): ?array
     {
-        $this->isValidFile($dataTransferObject);
-
         $fileRecords = $fileReader->fetchAll($dataTransferObject->getFileInput());
 
         return $this->validateMultiple($fileRecords);

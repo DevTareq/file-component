@@ -15,9 +15,9 @@
         <div class="container-sm">
             <div class="mb-3">
                 <form action="/files/upload-api" method="post" enctype="multipart/form-data">
-                    <input type="hidden" value="ingredient" name="category" id="category">
+{{--                    <input type="hidden" value="ingredient" name="category" id="category">--}}
 {{--                    <input type="hidden" value="product" name="category" id="category">--}}
-{{--                    <input type="hidden" value="staff" name="category" id="category">--}}
+                    <input type="hidden" value="staff" name="category" id="category">
                     <input class="form-control" type="file" id="file" name="file">
                     <button class="btn btn-primary btn-block mt-4">
                         Let's go!

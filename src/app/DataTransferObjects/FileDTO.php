@@ -21,15 +21,15 @@ class FileDTO implements DataTransferObjectInterface
     /** @var ?string $fileCategory */
     protected ?string $fileCategory;
 
+    /** @var array|null $validatedRecords */
+    protected ?array $validatedRecords;
+
     /**
      * @param Request $request
      * @return $this
      */
     public function createFromRequest(Request $request): self
     {
-        throw_if(!$request->file('file'), new FileNotFoundException());
-        throw_if(!$request->get('category'), new MissingFileCategory());
-
         $this->fileInput = $request->file('file');
         $this->fileCategory = $request->get('category');
         $this->extension = $request->file('file')->getClientOriginalExtension();
@@ -109,6 +109,25 @@ class FileDTO implements DataTransferObjectInterface
     public function setFileCategory(?string $fileCategory): self
     {
         $this->fileCategory = $fileCategory;
+
+        return $this;
+    }
+
+    /**
+     * @return ?array
+     */
+    public function getValidatedRecords(): ?array
+    {
+        return $this->validatedRecords;
+    }
+
+    /**
+     * @param ?array $data
+     * @return $this
+     */
+    public function setValidatedRecords(?array $data): self
+    {
+        $this->validatedRecords = $data;
 
         return $this;
     }

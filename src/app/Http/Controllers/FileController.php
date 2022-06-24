@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Contracts\DataTransferObjectInterface;
 use App\Contracts\FileManagerFactoryInterface;
+use App\Exceptions\Files\FileNotFoundException;
+use App\Exceptions\Files\MissingFileCategory;
 use App\Factories\FileManagerFactory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -52,6 +54,11 @@ class FileController extends BaseController
      */
     public function uploadApi(Request $request)
     {
+        // @todo: Refactor: custom request with validation
+
+        throw_if(!$request->file('file'), new FileNotFoundException());
+        throw_if(!$request->get('category'), new MissingFileCategory());
+
         $fileDTO = $this->dataTransferObject->createFromRequest($request);
 
         $fileManager = FileManagerFactory::getFileManager($fileDTO);

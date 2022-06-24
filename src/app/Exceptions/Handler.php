@@ -6,6 +6,8 @@ use App\Exceptions\Files\FileNotFoundException;
 use App\Exceptions\Files\FileUploadException;
 use App\Exceptions\Files\MissingFileCategory;
 use App\Exceptions\Files\UnsupportedFileException;
+use App\Exceptions\Logics\EmptyLogicalValidationException;
+use App\Exceptions\Logics\LogicalValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
@@ -73,8 +75,20 @@ class Handler extends ExceptionHandler
 
         MissingFileCategory::class => [
             'code' => 400,
-            'message' => 'Missing data: category',
+            'message' => MissingFileCategory::MESSAGE,
             'adaptMessage' => false,
+        ],
+
+        EmptyLogicalValidationException::class => [
+            'code' => 400,
+            'message' => EmptyLogicalValidationException::MESSAGE,
+            'adaptMessage' => false,
+        ],
+
+        LogicalValidationException::class => [
+            'code' => 400,
+            'message' => LogicalValidationException::MESSAGE,
+            'adaptMessage' => true,
         ],
     ];
 
@@ -83,7 +97,7 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Throwable  $exception
+     * @param \Throwable $exception
      * @return void
      *
      * @throws \Exception
