@@ -94,8 +94,6 @@ abstract class AbstractFileValidator implements FileValidatorInterface
     {
         throw_if(null == $dataTransferObject->getFileInput(), new FileNotFoundException());
 
-//        throw_if($dataTransferObject->getExtension() !== CsvFileManager::FILE_EXTENSION, new UnsupportedFileException());
-
         return true;
     }
 }

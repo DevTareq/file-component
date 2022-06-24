@@ -6,11 +6,14 @@ use App\Contracts\DataTransferObjectInterface;
 use App\Contracts\FileManagerInterface;
 use App\Contracts\FileReaderInterface;
 use App\Contracts\FileValidatorInterface;
+use App\Exceptions\Files\UnsupportedFileException;
 use App\Factories\FileValidatorFactory;
 use App\FileReaders\CsvReader;
 
 class CsvFileManager implements FileManagerInterface
 {
+    public const FILE_EXTENSION = 'csv';
+
     public FileReaderInterface $fileReader;
 
     public FileValidatorInterface $fileValidator;
@@ -22,6 +25,8 @@ class CsvFileManager implements FileManagerInterface
      */
     public function process(DataTransferObjectInterface $dataTransferObject): mixed
     {
+        throw_if($dataTransferObject->getExtension() !== static::FILE_EXTENSION, new UnsupportedFileException());
+
         $fileValidator = $this->getFileValidator($dataTransferObject);
 
         return $fileValidator->validate($dataTransferObject, $this->getFileReader());
@@ -32,7 +37,7 @@ class CsvFileManager implements FileManagerInterface
      */
     public function getFileReader(): FileReaderInterface
     {
-       return $this->fileReader = new CsvReader();
+        return $this->fileReader = new CsvReader();
     }
 
     /**
