@@ -11,17 +11,17 @@ class StaffFileValidator extends AbstractFileValidator
     protected array $rules = [
         'staff_name' => 'string|required|max:255',
         'display_name' => 'string|nullable|max:255',
-        'passcode' => 'integer|required|min:0', //unique
-        'is_manager' => 'integer|required|max:1',
-        'display_order' => 'integer|required|digits_between:1,4',
-        'shareable' => 'integer|required|max:1',
-        'is_courier' => 'integer|required|max:1',
+        'passcode' => 'numeric|required|digits_between:0,10',
+        'is_manager' => 'numeric|required|max:1|gte:0',
+        'display_order' => 'numeric|required|digits_between:1,4',
+        'shareable' => 'numeric|required|max:1|gte:0',
+        'is_courier' => 'numeric|required|max:1|gte:0',
         'email' => 'string|email|required|max:255',
-        'mobile' => 'string|digits_between:1,255',
+        'mobile' => 'numeric|digits_between:1,255',
         'staff_permissions' => 'string|nullable',
         'staff_image' => 'string|nullable',
         'staff_meta' => 'string|nullable',
-        'active' => 'integer|nullable|max:1',
+        'active' => 'numeric|nullable|max:1|gte:0',
     ];
 
     /**
