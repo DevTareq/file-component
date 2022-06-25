@@ -3,8 +3,6 @@
 namespace App\DataTransferObjects;
 
 use App\Contracts\DataTransferObjectInterface;
-use App\Exceptions\Files\FileNotFoundException;
-use App\Exceptions\Files\MissingFileCategory;
 use Illuminate\Http\Request;
 
 class FileDTO implements DataTransferObjectInterface

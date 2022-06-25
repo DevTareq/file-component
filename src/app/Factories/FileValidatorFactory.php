@@ -13,7 +13,12 @@ class FileValidatorFactory implements ValidatorFactoryInterface
 
     protected DataTransferObjectInterface $dataTransferObject;
 
-    public static function make(DataTransferObjectInterface $dataTransferObject)
+    /**
+     * @param DataTransferObjectInterface $dataTransferObject
+     * @return mixed
+     * @throws \Throwable
+     */
+    public static function make(DataTransferObjectInterface $dataTransferObject): mixed
     {
         throw_if(!$dataTransferObject->getFileInput(), new FileNotFoundException());
 

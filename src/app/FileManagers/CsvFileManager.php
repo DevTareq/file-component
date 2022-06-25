@@ -46,6 +46,7 @@ class CsvFileManager implements FileManagerInterface
     /**
      * @param DataTransferObjectInterface $dataTransferObject
      * @return FileValidatorInterface
+     * @throws \Throwable
      */
     public function getFileValidator(DataTransferObjectInterface $dataTransferObject): FileValidatorInterface
     {
