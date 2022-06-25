@@ -1,3 +1,4 @@
 # File Component 
 
-![Flow Chart](Flowchart.pdf)
+<img src="../src/Flowchart.jpg" alt="drawing"/>
+
