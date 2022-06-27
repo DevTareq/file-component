@@ -20,7 +20,7 @@ class FileValidatorFactory implements ValidatorFactoryInterface
      */
     public static function make(DataTransferObjectInterface $dataTransferObject): mixed
     {
-        throw_if(!$dataTransferObject->getFileInput(), new FileNotFoundException());
+        throw_if(null == $dataTransferObject->getFileInput(), new FileNotFoundException());
 
         $category = $dataTransferObject->getFileCategory();
 

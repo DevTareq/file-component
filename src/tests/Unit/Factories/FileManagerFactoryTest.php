@@ -31,7 +31,7 @@ class FileManagerFactoryTest extends MockeryTestCase
 
     public function testFactoryReturnTheRightObject()
     {
-        $fileManagerObj = fileManagerFactory::getFileManager($this->dataTransferObject);
+        $fileManagerObj = FileManagerFactory::getFileManager($this->dataTransferObject);
 
         $this->assertInstanceOf(CsvFileManager::class, $fileManagerObj);
     }
@@ -47,7 +47,7 @@ class FileManagerFactoryTest extends MockeryTestCase
         $this->dataTransferObject
             ->setFileInput($file);
 
-        fileManagerFactory::getFileManager($this->dataTransferObject);
+        FileManagerFactory::getFileManager($this->dataTransferObject);
     }
 
     public function testFactoryReturnExceptionForUnsupportedExtension()
@@ -63,7 +63,7 @@ class FileManagerFactoryTest extends MockeryTestCase
             ->setFileCategory('sample')
             ->setExtension('sql');
 
-        fileManagerFactory::getFileManager($this->dataTransferObject);
+        FileManagerFactory::getFileManager($this->dataTransferObject);
     }
 
     public function testFactoryReturnExceptionForFileNotUploaded()
@@ -76,11 +76,11 @@ class FileManagerFactoryTest extends MockeryTestCase
             ->setFileCategory('sample')
             ->setExtension('sql');
 
-        fileManagerFactory::getFileManager($this->dataTransferObject);
+        FileManagerFactory::getFileManager($this->dataTransferObject);
     }
 
     public function testFactoryPostFixName()
     {
-        $this->assertTrue(fileManagerFactory::getPostFixName() == 'FileManager');
+        $this->assertTrue(FileManagerFactory::getPostFixName() == 'FileManager');
     }
 }
