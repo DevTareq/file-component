@@ -4,6 +4,7 @@ namespace Test\Unit;
 
 use App\Contracts\DataTransferObjectInterface;
 use App\DataTransferObjects\FileDTO;
+use App\Exceptions\Files\FileNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Mockery\Adapter\Phpunit\MockeryTestCase;

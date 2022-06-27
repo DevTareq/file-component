@@ -10,6 +10,9 @@ class DecimalRuleTest extends MockeryTestCase
 {
     protected Rule $rule;
 
+    /**
+     * @return void
+     */
     protected function setUp(): void
     {
         $this->rule = new DecimalRule(8, 3);
