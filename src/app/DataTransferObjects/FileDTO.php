@@ -17,7 +17,7 @@ class FileDTO implements DataTransferObjectInterface
     protected ?object $fileInput = null;
 
     /** @var ?string $fileCategory */
-    protected ?string $fileCategory;
+    protected ?string $fileCategory = null;
 
     /** @var array|null $validatedRecords */
     protected ?array $validatedRecords;
@@ -74,9 +74,9 @@ class FileDTO implements DataTransferObjectInterface
     }
 
     /**
-     * @return object
+     * @return object|null
      */
-    public function getFileInput(): object
+    public function getFileInput(): ?object
     {
         return $this->fileInput;
     }

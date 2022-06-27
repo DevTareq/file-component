@@ -21,7 +21,7 @@ class FileManagerFactory implements FileManagerFactoryInterface
     {
         throw_if(null == $dataTransferObject->getFileCategory(), new UnsupportedFileCategory());
 
-        throw_if(!$dataTransferObject->getFileInput(), new FileNotFoundException());
+        throw_if(null == $dataTransferObject->getFileInput(), new FileNotFoundException());
 
         $extension = $dataTransferObject->getFileInput()->getClientOriginalExtension();
 
