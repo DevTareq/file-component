@@ -15,8 +15,6 @@ class StaffOutletPasscodeValidator implements LogicalValidatorInterface
      */
     public function validate(DataTransferObjectInterface $dataTransferObject): mixed
     {
-//        return ['anything' => 'something'];
-
 //        throw new LogicalValidationException('did not pass the additional validation', 400);
 
         return [];
