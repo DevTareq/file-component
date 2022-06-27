@@ -25,7 +25,7 @@ class FileManagerFactoryTest extends MockeryTestCase
 
         $this->dataTransferObject
             ->setFileInput($file)
-            ->setFileCategory('example-category')
+            ->setFileCategory('sample')
             ->setExtension('csv');
     }
 
@@ -60,7 +60,7 @@ class FileManagerFactoryTest extends MockeryTestCase
 
         $this->dataTransferObject
             ->setFileInput($file)
-            ->setFileCategory('example-category')
+            ->setFileCategory('sample')
             ->setExtension('sql');
 
         fileManagerFactory::getFileManager($this->dataTransferObject);
@@ -73,7 +73,7 @@ class FileManagerFactoryTest extends MockeryTestCase
         $this->dataTransferObject = new FileDTO();
 
         $this->dataTransferObject
-            ->setFileCategory('example-category')
+            ->setFileCategory('sample')
             ->setExtension('sql');
 
         fileManagerFactory::getFileManager($this->dataTransferObject);

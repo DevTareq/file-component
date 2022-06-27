@@ -24,10 +24,12 @@ class FileDtoTest extends MockeryTestCase
 
         $request = new Request();
         $request->files->set('file', $file);
+        $request->request->set('category', 'sample');
 
         $fileDtoObject = $this->fileDto->createFromRequest($request);
 
         $this->assertEquals('csv', $fileDtoObject->getExtension());
+        $this->assertEquals('sample', $fileDtoObject->getFileCategory());
         $this->assertIsObject($fileDtoObject->getFileInput());
     }
 }
