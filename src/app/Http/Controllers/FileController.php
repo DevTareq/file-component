@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Contracts\DataTransferObjectInterface;
 use App\Contracts\FileManagerFactoryInterface;
-use App\Exceptions\Files\FileNotFoundException;
-use App\Exceptions\Files\MissingFileCategory;
 use App\Factories\FileManagerFactory;
+use App\Validators\Requests\FileUploadRequestValidator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller as BaseController;
@@ -32,32 +31,18 @@ class FileController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @return \Illuminate\View\View|\Laravel\Lumen\Application
-     * @throws \Throwable
-     */
-    public function upload(Request $request)
-    {
-        $fileDTO = $this->dataTransferObject->createFromRequest($request);
-
-        $fileManager = FileManagerFactory::getFileManager($fileDTO);
-
-        $results = $fileManager->process($fileDTO);
-
-        return view('upload', compact('results'));
-    }
-
-    /**
+     * @param FileUploadRequestValidator $validator
      * @param Request $request
      * @return JsonResponse
      * @throws \Throwable
      */
-    public function uploadApi(Request $request)
+    public function upload(FileUploadRequestValidator $validator, Request $request): JsonResponse
     {
-        // @todo: Refactor: custom request with validation
+        $validation = $validator->validate($request);
 
-        throw_if(!$request->file('file'), new FileNotFoundException());
-        throw_if(!$request->get('category'), new MissingFileCategory());
+        if ($validation->getHasFailed()) {
+            return $this->responseRequestError($validation->getErrors());
+        }
 
         $fileDTO = $this->dataTransferObject->createFromRequest($request);
 

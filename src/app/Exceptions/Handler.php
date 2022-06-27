@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use App\Exceptions\Files\FileNotFoundException;
 use App\Exceptions\Files\FileUploadException;
 use App\Exceptions\Files\MissingFileCategory;
+use App\Exceptions\Files\UnsupportedFileCategory;
 use App\Exceptions\Files\UnsupportedFileException;
 use App\Exceptions\Logics\EmptyLogicalValidationException;
 use App\Exceptions\Logics\LogicalValidationException;
@@ -88,7 +89,13 @@ class Handler extends ExceptionHandler
         LogicalValidationException::class => [
             'code' => 400,
             'message' => LogicalValidationException::MESSAGE,
-            'adaptMessage' => true,
+            'adaptMessage' => false,
+        ],
+
+        UnsupportedFileCategory::class => [
+            'code' => 400,
+            'message' => UnsupportedFileCategory::MESSAGE,
+            'adaptMessage' => false,
         ],
     ];
 
@@ -135,7 +142,6 @@ class Handler extends ExceptionHandler
         # We get the class name for the exception that was raised
         $exceptionClass = get_class($exception);
 
-//        dd($exception->getMessage());
         # we see if we have registered it in the mapping - if it isn't
         # we create an initial structure as an 'Internal Server Error'
         # note that this can always be revised at a later time

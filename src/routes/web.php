@@ -16,5 +16,5 @@
 //@todo make a group for files
 // @todo csrf for the form
 $router->get('/files', 'FileController@index');
-$router->post('/files/upload', 'FileController@upload');
-$router->post('/files/upload-api', 'FileController@uploadApi');
+$router->post('/files/upload', 'FileController@uploadForm');
+$router->post('/files/upload-api', 'FileController@upload');
