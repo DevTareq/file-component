@@ -8,6 +8,8 @@ use League\Csv\Reader;
 
 class CsvReader implements FileReaderInterface
 {
+    protected ?Reader $reader = null;
+
     /**
      * @param object $fileInput
      * @return mixed
@@ -15,12 +17,11 @@ class CsvReader implements FileReaderInterface
      */
     public function fetchAll(object $fileInput): mixed
     {
-        $fileStream = new \SplFileObject($fileInput);
-        $reader = Reader::createFromFileObject($fileStream);
+        $this->setFileStreamReader($fileInput);
 
-        $reader->setHeaderOffset(0);
+        $this->reader->setHeaderOffset(0);
 
-        return $reader->getRecords() ?? [];
+        return $this->reader->getRecords() ?? [];
     }
 
     /**
@@ -30,11 +31,24 @@ class CsvReader implements FileReaderInterface
      */
     public function getHeaders(object $fileInput): mixed
     {
-        $fileStream = new \SplFileObject($fileInput);
-        $reader = Reader::createFromFileObject($fileStream);
+        $this->setFileStreamReader($fileInput);
 
-        $reader->setHeaderOffset(0);
+        $this->reader->setHeaderOffset(0);
 
-        return $reader->getHeader();
+        return $this->reader->getHeader();
+    }
+
+    /**
+     * @param object $fileInput
+     * @return void
+     */
+    private function setFileStreamReader(object $fileInput): void
+    {
+        if (null === $this->reader) {
+
+            $fileStream = new \SplFileObject($fileInput);
+
+            $this->reader = Reader::createFromFileObject($fileStream);
+        }
     }
 }

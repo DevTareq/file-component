@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use App\Contracts\Abstracts\AbstractFileValidator;
 use App\Contracts\DataTransferObjectInterface;
 use App\Contracts\FileManagerFactoryInterface;
-use App\Contracts\FileReaderInterface;
 use App\DataTransferObjects\FileDTO;
 use App\Factories\FileManagerFactory;
 use App\Http\Controllers\FileController;

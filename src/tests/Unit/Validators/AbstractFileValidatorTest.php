@@ -32,6 +32,7 @@ class AbstractFileValidatorTest extends MockeryTestCase
 
     public function testValidateMultipleReturnStructure()
     {
+        // shoul return array of errors and record
         $fileValidator = new StaffFileValidator();
 
         $results = $fileValidator->validateMultiple($this->csvContent);
@@ -41,11 +42,14 @@ class AbstractFileValidatorTest extends MockeryTestCase
 
     public function testValidateOnceReturnStructure()
     {
+        // should return array of errors and record
 
     }
 
     public function testHasErrorMethodReturnStructure()
     {
+        // should return array of errors id there is any
+        // should return array of data only if no errors
 
     }
 
