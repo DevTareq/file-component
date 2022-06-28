@@ -50,11 +50,7 @@ class FileController extends BaseController
 
         $results = $fileManager->process($fileDTO);
 
-        if (empty($results)) {
-            return $this->responseRequestSuccess();
-        }
-
-        return $this->responseRequestError($results);
+        return $this->returnResponse($results);
     }
 
     /**
@@ -73,5 +69,18 @@ class FileController extends BaseController
     protected function responseRequestError($data, int $statusCode = 400): JsonResponse
     {
         return response()->json(['data' => $data, 'code' => $statusCode], $statusCode);
+    }
+
+    /**
+     * @param array $results
+     * @return JsonResponse
+     */
+    private function returnResponse(array $results): JsonResponse
+    {
+        if (empty($results)) {
+            return $this->responseRequestSuccess();
+        }
+
+        return $this->responseRequestError($results);
     }
 }
