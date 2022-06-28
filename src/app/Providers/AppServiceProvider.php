@@ -8,10 +8,8 @@ use App\Contracts\FileManagerFactoryInterface;
 use App\Contracts\FileReaderInterface;
 use App\DataTransferObjects\FileDTO;
 use App\Factories\FileManagerFactory;
-use App\FileReaders\CsvReader;
 use App\Http\Controllers\FileController;
 use App\Rules\DecimalRule;
-use App\Validators\Files\CsvFileValidator;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,10 +29,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->when(FileController::class)
             ->needs(DataTransferObjectInterface::class)
             ->give(FileDTO::class);
-
-//        $this->app->when(AbstractFileValidator::class)
-//            ->needs(FileReaderInterface::class)
-//            ->give(CsvReader::class);
     }
 
     /**

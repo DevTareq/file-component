@@ -29,7 +29,7 @@ abstract class AbstractFileValidator implements FileValidatorInterface
      * @param $fileRecords
      * @return array|null
      */
-    protected function validateMultiple($fileRecords): ?array
+    public function validateMultiple($fileRecords): ?array
     {
         $validatedRecords = [];
 
@@ -55,7 +55,7 @@ abstract class AbstractFileValidator implements FileValidatorInterface
      * @param $fileRecords
      * @return array|null
      */
-    protected function validateOnce($fileRecords): ?array
+    public function validateOnce($fileRecords): ?array
     {
         $validatedRecords = [];
 

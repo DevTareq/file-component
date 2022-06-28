@@ -13,6 +13,8 @@ class AbstractFileValidatorTest extends MockeryTestCase
 {
     protected DataTransferObjectInterface $dataTransferObject;
 
+    protected array $csvContent;
+
     protected function setUp(): void
     {
         $file = UploadedFile::fake()->create('fake_file.csv');
@@ -23,18 +25,28 @@ class AbstractFileValidatorTest extends MockeryTestCase
             ->setFileInput($file)
             ->setFileCategory('ingredient')
             ->setExtension('csv');
+
+        // @todo use fixture file
+        $this->csvContent = json_decode(file_get_contents(dirname(__FILE__) . '/Fixtures/sample1.json'));
     }
 
-    public function testFileValidatorRules()
+    public function testValidateMultipleReturnStructure()
     {
-        $this->markTestSkipped();
+        $fileValidator = new StaffFileValidator();
 
-        // todo: Refactor - create Mocks
-        // todo: use dataProviders
-//        $fileValidator = new StaffFileValidator();
-//        $fileReader = new CsvReader();
-//
-//        $fileValidator->validate($this->dataTransferObject, $fileReader);
+        $results = $fileValidator->validateMultiple($this->csvContent);
+
+        $fileReader = new CsvReader();
+    }
+
+    public function testValidateOnceReturnStructure()
+    {
+
+    }
+
+    public function testHasErrorMethodReturnStructure()
+    {
+
     }
 
     public function testLogicalRuleValidationAccessibility()
