@@ -1,0 +1,11 @@
+staff_name,display_name,passcode,is_manager,display_order,shareable,is_courier,email,mobile,staff_permissions,staff_image,staff_meta,active
+tariq,Tariq,1234567,1,5,0,1,tareq@gmail.com,192762672,One,,,1
+tariq,Tariq,1234567,0,1,0,0,tareq@gmail.com,,,Something,Something,0
+tariq,Tariq,1234567,0,1,0,0,tareq@gmail.com,,,Something,Something,0
+tariq,Tariq,12345,1,0,1,0,tareq@gmail.com,192762672,One,,Something,1
+tariq,Tariq,12345,0,1,0,1,tareq@gmail.com,192762672,One,,Something,1
+tariq,Tariq,12345,1,0,1,0,tareq@gmail.com,,One,,,0
+tariq,Tariq,12345,1,1,0,0,tareq@gmail.com,192762672,,Something,Something,1
+tariq,Tariq,12345,0,1,0,0,tareq@gmail.com,192762672,One,,,0
+tariq,Tariq,12345,0,0,0,1,tareq@gmail.com,,One,Something,Something,1
+tariq,Tariq,12345,1,1,1,0,tareq@gmail.com,192762672,One,,Something,1

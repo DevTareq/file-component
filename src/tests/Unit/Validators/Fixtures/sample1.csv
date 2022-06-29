@@ -1,0 +1,12 @@
+ingredient_name,is_preparation_item,ingredient_unit,supplier_pack_size,purchase_price,supplier_purchase_price,retail_value_store_unit,delivery_code,ingredient_sku,barcode,default_unit,store_to_supplier_unit_conversion,supplier_qty_quantifier,inventory,stock_level_1,stock_level_2,alert_on,alert_below,delivery_reorder_on,delivery_reorder_point,active,is_deleted,instructions
+Some product,Some data,12.3,20,1.00,1.99,1.5,1234,192762672,Asdf3243,Something,1.99,1.5,2.00,1.9,1.99,1,1,1,,1,1,Something
+Some product,Some data,1.00,,3.00,2.00,1.00,1234345,192762672,Asdf3243,Asdf,1.00,1.5,2.00,1.9,1.99,1,2,0,1,0,0,Something
+Some product,Some data,12.3,3,1.00,1.00,,,192762672,,Something,,1.5,2.00,1.9,1.99,0,2,1,12,1,0,Something
+Some product,Some data,2,,1.1,,1.00,234,,Asdf3243,Something,1.00,1.5,2.00,1.9,1.99,1,,,1,1,0,Something
+Some product,Some data,12.3,20,1.00,2.00,1.00,,192762672,Asdf3243,,1.6,1.5,2.00,1.9,1.99,1,2,1,12,1,1,Something
+Some product,Some data,12.3,1,1.00,2.00,1.00,1234,192762672,Asdf3243,Something,1.00,1.5,2.00,1.9,1.99,0,1,1,12,,0,Something
+Some product,Some data,1,20,1.00,2.00,,234,,,Something,1.00,1.5,2.00,1.9,1.99,1,2,0,12,1,0,Something
+Some product,Some data,12.3,5,,2.99,1.00,265,192762672,Asdf3243,Something,1.99,1.5,2.00,1.9,1.99,,,1,50,1,,Something
+Some product,Some data,12.3,,1.00,2.00,1.99,1234,192762672,Asdf3243,,1.00,1.5,2.00,1.9,1.99,1,,,,0,0,Something
+Some product,Some data,12.3,20,1.00,,1.00,,,,Something,,1.5,2.00,1.9,1.99,,0,,12,1,0,Something
+Some product,Some data,2.94,7,,2.00,,1234,192762672,Asdf3243,Something,1.5,1.5,2.00,1.9,1.99,0,2,1,1,0,1,Something

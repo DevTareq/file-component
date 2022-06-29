@@ -7,6 +7,8 @@ use App\DataTransferObjects\FileDTO;
 use App\FileReaders\CsvReader;
 use App\Validators\Files\StaffFileValidator;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\MessageBag;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class AbstractFileValidatorTest extends MockeryTestCase
@@ -15,51 +17,71 @@ class AbstractFileValidatorTest extends MockeryTestCase
 
     protected array $csvContent;
 
+    protected UploadedFile $fileInput;
+
+    protected CsvReader $fileReader;
+
     protected function setUp(): void
     {
-        $file = UploadedFile::fake()->create('fake_file.csv');
-
         $this->dataTransferObject = new FileDTO();
+        $this->fileReader = new CsvReader();
 
-        $this->dataTransferObject
-            ->setFileInput($file)
-            ->setFileCategory('ingredient')
-            ->setExtension('csv');
-
-        // @todo use fixture file
-        $this->csvContent = json_decode(file_get_contents(dirname(__FILE__) . '/Fixtures/sample1.json'));
+        $this->dataTransferObject->setExtension('csv');
     }
 
     public function testValidateMultipleReturnStructure()
     {
-        // shoul return array of errors and record
-        $fileValidator = new StaffFileValidator();
+        $this->dataTransferObject
+            ->setFileInput($this->getSampleFile('sample1.csv'))
+            ->setFileCategory('ingredient');
 
-        $results = $fileValidator->validateMultiple($this->csvContent);
+        $fileValidatorMock = $this->getMockBuilder(StaffFileValidator::class)
+            ->addMethods([])
+            ->getMock();
 
-        $fileReader = new CsvReader();
+        Validator::shouldReceive('make')
+            ->andReturn(\Mockery::mock([
+                'fails' => true,
+                'errors' => new MessageBag(['errors' => 'some message']),
+                'all' => []]));
+
+        $validation = $fileValidatorMock->validate($this->dataTransferObject, $this->fileReader);
+
+        $this->assertArrayHasKey('errors', $validation[0]);
+        $this->assertArrayHasKey('record', $validation[0]);
     }
 
-    public function testValidateOnceReturnStructure()
+    public function testLogicalRuleValidationHasNoErrors()
     {
-        // should return array of errors and record
+        $this->dataTransferObject
+            ->setFileInput($this->getSampleFile('sample2.csv'))
+            ->setFileCategory('staff')
+            ->setExtension('csv');
 
+        $fileValidatorMock = $this->getMockBuilder(StaffFileValidator::class)
+            ->addMethods([])
+            ->getMock();
+
+        Validator::shouldReceive('make')->andReturn(\Mockery::mock(['fails' => false]));
+
+        $validation = $fileValidatorMock->validate($this->dataTransferObject, $this->fileReader);
+
+        $this->assertArrayNotHasKey('errors', $validation);
     }
 
-    public function testHasErrorMethodReturnStructure()
+    /**
+     * @param string $fileName
+     * @return UploadedFile
+     */
+    private function getSampleFile(string $fileName): UploadedFile
     {
-        // should return array of errors id there is any
-        // should return array of data only if no errors
-
-    }
-
-    public function testLogicalRuleValidationAccessibility()
-    {
-        $this->markTestSkipped();
-    }
-
-    public function testWithoutLogicalRuleValidation()
-    {
-        $this->markTestSkipped();
+        return new UploadedFile(
+            dirname(__FILE__) . '/Fixtures/' . $fileName,
+            'sample1.csv',
+            'text/csv',
+            null,
+            false,
+            TRUE
+        );
     }
 }

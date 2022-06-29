@@ -35,7 +35,7 @@ abstract class AbstractFileValidator implements FileValidatorInterface
 
         foreach ($fileRecords as $offset => $record) {
 
-            $validator = Validator::make($record, $this->getRules());
+            $validator = $this->validateRecord($record);
 
             if (!$validator->fails()) {
                 $validatedRecords[] = $record;
@@ -60,7 +60,7 @@ abstract class AbstractFileValidator implements FileValidatorInterface
         $validatedRecords = [];
 
         foreach ($fileRecords as $offset => $record) {
-            $validator = Validator::make($record, $this->getRules());
+            $validator = $this->validateRecord($record);
 
             $validatedRecords[] = $record;
 
@@ -130,5 +130,14 @@ abstract class AbstractFileValidator implements FileValidatorInterface
     public function getRules(): array
     {
         return $this->rules;
+    }
+
+    /**
+     * @param $record
+     * @return mixed
+     */
+    public function validateRecord($record): mixed
+    {
+        return Validator::make($record, $this->getRules());
     }
 }
