@@ -77,7 +77,7 @@ class AbstractFileValidatorTest extends MockeryTestCase
     {
         return new UploadedFile(
             dirname(__FILE__) . '/Fixtures/' . $fileName,
-            'sample1.csv',
+            $fileName,
             'text/csv',
             null,
             false,
